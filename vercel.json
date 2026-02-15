@@ -2,11 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
+      "src": "api/hello.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/health.py",
+      "use": "@vercel/python"
     },
     {
       "src": "package.json",
@@ -18,8 +19,16 @@
   ],
   "routes": [
     {
+      "src": "/api/hello",
+      "dest": "/api/hello.py"
+    },
+    {
+      "src": "/api/health",
+      "dest": "/api/health.py"
+    },
+    {
       "src": "/api/(.*)",
-      "dest": "/api/index.py"
+      "dest": "/api/hello.py"
     },
     {
       "src": "/(.*)",
@@ -30,18 +39,15 @@
   "env": {
     "PYTHON_VERSION": "3.11"
   },
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_API_URL": "https://micro-saas-scout.vercel.app/api"
-    }
-  },
   "functions": {
-    "api/index.py": {
-      "maxDuration": 30,
-      "memory": 1024,
-      "runtime": "python3.11"
+    "api/hello.py": {
+      "maxDuration": 10,
+      "memory": 1024
+    },
+    "api/health.py": {
+      "maxDuration": 10,
+      "memory": 1024
     }
   },
-  "regions": ["iad1"],
-  "public": false
+  "regions": ["iad1"]
 }
