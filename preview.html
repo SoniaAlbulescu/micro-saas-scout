@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro SaaS Scout - 界面预览</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            color: #333;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        
+        .feature-desc {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .screenshot {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .screenshot-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1f2937;
+            text-align: center;
+        }
+        
+        .screenshot-img {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        
+        .cta {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .cta-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .cta-desc {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .deploy-steps {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .steps-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #1f2937;
+            text-align: center;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1f2937;
+        }
+        
+        .step-desc {
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Micro SaaS Scout</div>
+            <div class="subtitle">出海工具需求挖掘系统 - 界面预览</div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">自动化需求挖掘</div>
+                <div class="feature-desc">
+                    从Product Hunt、Reddit、Chrome商店等平台自动收集工具需求，发现下一个赚钱机会。
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">智能评分系统</div>
+                <div class="feature-desc">
+                    从需求强度、市场规模、付费意愿、技术可行性等维度综合评分，快速识别高潜力机会。
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <div class="feature-title">用户画像分析</div>
+                <div class="feature-desc">
+                    分析目标用户角色、使用场景、预算范围，回答"什么人在什么场景下愿意花多少钱解决什么问题"。
+                </div>
+            </div>
+        </div>
+        
+        <div class="screenshots">
+            <div class="screenshot">
+                <div class="screenshot-title">仪表板界面</div>
+                <div class="screenshot-img">
+                    📈 实时数据仪表板<br>趋势图表 + 关键指标
+                </div>
+            </div>
+            
+            <div class="screenshot">
+                <div class="screenshot-title">需求卡片</div>
+                <div class="screenshot-img">
+                    🃏 详细需求信息<br>评分 + 用户画像 + 市场数据
+                </div>
+            </div>
+            
+            <div class="screenshot">
+                <div class="screenshot-title">筛选系统</div>
+                <div class="screenshot-img">
+                    🔍 智能筛选<br>按类型、价格、评分过滤
+                </div>
+            </div>
+        </div>
+        
+        <div class="deploy-steps">
+            <div class="steps-title">一键部署到Vercel</div>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">推送到GitHub</div>
+                    <div class="step-desc">将项目代码上传到GitHub仓库</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">连接Vercel</div>
+                    <div class="step-desc">使用GitHub账号登录Vercel，导入仓库</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">自动部署</div>
+                    <div class="step-desc">Vercel自动构建并部署，获得生产URL</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">访问网站</div>
+                    <div class="step-desc">通过vercel.app域名访问你的Micro SaaS Scout</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta">
+            <div class="cta-title">立即开始你的出海工具之旅</div>
+            <div class="cta-desc">自动化挖掘需求，发现下一个Micro SaaS机会</div>
+            <a href="#" class="cta-button">查看完整项目 →</a>
+        </div>
+    </div>
+</body>
+</html>
