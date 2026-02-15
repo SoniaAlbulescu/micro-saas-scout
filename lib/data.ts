@@ -301,15 +301,6 @@ export const mockDemands: Demand[] = [
   }
 ]
 
-export const trendsData = [
-  { month: '1月', demandCount: 120, highPotential: 15 },
-  { month: '2月', demandCount: 145, highPotential: 22 },
-  { month: '3月', demandCount: 168, highPotential: 28 },
-  { month: '4月', demandCount: 192, highPotential: 35 },
-  { month: '5月', demandCount: 210, highPotential: 42 },
-  { month: '6月', demandCount: 235, highPotential: 48 },
-]
-
 export const sourceDistribution = [
   { name: 'Reddit', value: 35 },
   { name: 'Product Hunt', value: 25 },

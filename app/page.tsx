@@ -1,7 +1,6 @@
 import DemandCard from '@/components/DemandCard'
 import StatsCard from '@/components/StatsCard'
-import TrendChart from '@/components/TrendChart'
-import { mockDemands, trendsData, sourceDistribution, pricingDistribution } from '@/lib/data'
+import { mockDemands, sourceDistribution, pricingDistribution } from '@/lib/data'
 import { TrendingUp, Users, DollarSign, Zap, BarChart3, Target } from 'lucide-react'
 
 export default function Home() {
@@ -74,7 +73,9 @@ export default function Home() {
               <option>今年至今</option>
             </select>
           </div>
-          <TrendChart data={trendsData} />
+          <div className="h-64 flex items-center justify-center text-gray-500">
+            趋势图表区域（简化版本）
+          </div>
         </div>
 
         <div className="rounded-xl border border-gray-200 bg-white p-6">
