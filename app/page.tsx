@@ -12,28 +12,28 @@ export default function Home() {
       value: '235',
       change: '+12%',
       icon: TrendingUp,
-      color: 'blue'
+      color: 'blue' as const
     },
     {
       title: '高潜力机会',
       value: '42',
       change: '+8%',
       icon: Target,
-      color: 'green'
+      color: 'green' as const
     },
     {
       title: '平均月费潜力',
       value: '$24.50',
       change: '+5%',
       icon: DollarSign,
-      color: 'purple'
+      color: 'purple' as const
     },
     {
       title: '活跃用户画像',
       value: '8,500+',
       change: '+15%',
       icon: Users,
-      color: 'orange'
+      color: 'orange' as const
     }
   ]
 
