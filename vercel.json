@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "distDir": ".next"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "continue": true
+    }
+  ],
+  "env": {
+    "PYTHON_VERSION": "3.11"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_API_URL": "https://micro-saas-scout.vercel.app/api"
+    }
+  },
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 30,
+      "memory": 1024,
+      "runtime": "python3.11"
+    }
+  },
+  "regions": ["iad1"],
+  "public": false
+}
