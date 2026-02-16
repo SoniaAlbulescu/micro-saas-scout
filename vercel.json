@@ -2,8 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/simple_api.py",
-      "use": "@vercel/python"
+      "src": "api/index.js",
+      "use": "@vercel/node"
     },
     {
       "src": "package.json",
@@ -16,7 +16,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/simple_api.py"
+      "dest": "/api/index.js"
     },
     {
       "src": "/(.*)",
@@ -24,11 +24,8 @@
       "continue": true
     }
   ],
-  "env": {
-    "PYTHON_VERSION": "3.11"
-  },
   "functions": {
-    "api/simple_api.py": {
+    "api/index.js": {
       "maxDuration": 10,
       "memory": 1024
     }

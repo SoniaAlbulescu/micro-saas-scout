@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro SaaS Scout - 状态检查</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Micro SaaS Scout 状态检查</h1>
+    
+    <div class="status warning">
+        <strong>注意：</strong> 正在检查后端API状态...
+    </div>
+    
+    <h2>📡 API端点测试</h2>
+    
+    <div class="endpoint">
+        <strong>根端点：</strong> <code>/api/</code>
+        <button onclick="testEndpoint('/api/')">测试</button>
+    </div>
+    
+    <div class="endpoint">
+        <strong>健康检查：</strong> <code>/api/health</code>
+        <button onclick="testEndpoint('/api/health')">测试</button>
+    </div>
+    
+    <div class="endpoint">
+        <strong>Hello端点：</strong> <code>/api/hello</code>
+        <button onclick="testEndpoint('/api/hello')">测试</button>
+    </div>
+    
+    <div class="endpoint">
+        <strong>文档页面：</strong> <code>/api/docs</code>
+        <button onclick="testEndpoint('/api/docs')">测试</button>
+    </div>
+    
+    <div id="result"></div>
+    
+    <h2>🔧 故障排除</h2>
+    <ol>
+        <li>检查Vercel部署日志</li>
+        <li>验证<code>vercel.json</code>配置</li>
+        <li>检查Python依赖是否正确安装</li>
+        <li>查看网络连接和CORS设置</li>
+    </ol>
+    
+    <h2>📋 部署信息</h2>
+    <ul>
+        <li>最新提交: <code>c253728</code> - 创建最简单的API端点</li>
+        <li>部署时间: 等待Vercel自动部署</li>
+        <li>预计完成: 1-5分钟</li>
+    </ul>
+    
+    <script>
+        async function testEndpoint(endpoint) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `<p>测试 ${endpoint} ...</p>`;
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                let content = '';
+                if (response.headers.get('content-type')?.includes('application/json')) {
+                    const data = await response.json();
+                    content = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    content = await response.text();
+                    content = `<pre>${content.substring(0, 500)}...</pre>`;
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="status ${response.ok ? 'success' : 'error'}">
+                        <strong>${response.ok ? '✅ 成功' : '❌ 失败'}</strong>
+                        <p>端点: ${endpoint}</p>
+                        <p>状态码: ${response.status} ${response.statusText}</p>
+                        ${content}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="status error">
+                        <strong>❌ 请求失败</strong>
+                        <p>端点: ${endpoint}</p>
+                        <p>错误: ${error.message}</p>
+                        <p>可能的原因：</p>
+                        <ul>
+                            <li>API端点不存在</li>
+                            <li>网络连接问题</li>
+                            <li>CORS限制</li>
+                            <li>服务器未响应</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+        
+        // 页面加载时自动测试根端点
+        window.addEventListener('load', () => {
+            setTimeout(() => testEndpoint('/api/'), 1000);
+        });
+    </script>
+</body>
+</html>
