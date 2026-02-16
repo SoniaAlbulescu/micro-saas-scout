@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro SaaS Scout - 部署状态</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .status-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .deploying {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        .error {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .test-btn {
+            display: inline-block;
+            background: white;
+            color: #333;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .endpoint-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-box deploying">
+        <h1>🚀 Micro SaaS Scout</h1>
+        <p>项目部署状态检查</p>
+    </div>
+    
+    <h2>📊 当前状态</h2>
+    <div class="status-box">
+        <p><strong>部署状态：</strong> 正在检查...</p>
+        <p><strong>最后更新：</strong> 2026-02-16 13:26 UTC</p>
+        <p><strong>提交版本：</strong> <code>86ad7e4</code></p>
+    </div>
+    
+    <h2>🔗 测试链接</h2>
+    <div class="endpoint-list">
+        <p>点击以下链接测试各个端点：</p>
+        
+        <a href="/api/" class="test-btn">API根目录</a>
+        <a href="/api/health" class="test-btn">健康检查</a>
+        <a href="/api/hello" class="test-btn">Hello端点</a>
+        <a href="/api/docs" class="test-btn">API文档</a>
+        <a href="/page.html" class="test-btn">状态页面</a>
+        
+        <p style="margin-top: 20px;">
+            <small>如果链接无效，请等待Vercel部署完成（通常需要1-5分钟）</small>
+        </p>
+    </div>
+    
+    <h2>🔧 技术信息</h2>
+    <ul>
+        <li><strong>后端技术：</strong> Node.js API端点</li>
+        <li><strong>前端框架：</strong> Next.js 14</li>
+        <li><strong>部署平台：</strong> Vercel</li>
+        <li><strong>项目类型：</strong> 混合应用（前端 + API）</li>
+    </ul>
+    
+    <h2>📝 故障排除</h2>
+    <ol>
+        <li>等待Vercel部署完成（检查邮箱中的部署通知）</li>
+        <li>访问Vercel控制台查看部署日志</li>
+        <li>确认GitHub仓库已正确连接</li>
+        <li>检查<code>vercel.json</code>配置是否正确</li>
+    </ol>
+    
+    <div class="status-box">
+        <p>💡 <strong>提示：</strong> 如果长时间无法访问，请尝试：</p>
+        <p>1. 在Vercel控制台中手动触发重新部署</p>
+        <p>2. 检查项目设置中的环境变量</p>
+        <p>3. 验证域名解析是否正确</p>
+    </div>
+    
+    <footer style="margin-top: 40px; text-align: center; color: #666;">
+        <p>Micro SaaS Scout Project • 最后更新: 2026-02-16</p>
+        <p>如果问题持续存在，请联系技术支持</p>
+    </footer>
+    
+    <script>
+        // 自动检查API状态
+        async function checkAPI() {
+            try {
+                const response = await fetch('/api/health');
+                if (response.ok) {
+                    document.querySelector('.status-box.deploying').className = 'status-box success';
+                    document.querySelector('.status-box.deploying').innerHTML = `
+                        <h1>✅ Micro SaaS Scout</h1>
+                        <p>API运行正常！</p>
+                        <p>所有端点均可访问</p>
+                    `;
+                }
+            } catch (error) {
+                console.log('API检查失败:', error);
+            }
+        }
+        
+        // 页面加载后5秒检查API状态
+        setTimeout(checkAPI, 5000);
+    </script>
+</body>
+</html>
