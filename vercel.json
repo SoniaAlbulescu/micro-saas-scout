@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
       "src": "api/hello.py",
       "use": "@vercel/python"
     },
@@ -28,7 +32,7 @@
     },
     {
       "src": "/api/(.*)",
-      "dest": "/api/hello.py"
+      "dest": "/api/index.py"
     },
     {
       "src": "/(.*)",
@@ -40,6 +44,10 @@
     "PYTHON_VERSION": "3.11"
   },
   "functions": {
+    "api/index.py": {
+      "maxDuration": 30,
+      "memory": 2048
+    },
     "api/hello.py": {
       "maxDuration": 10,
       "memory": 1024

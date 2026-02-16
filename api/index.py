@@ -5,11 +5,6 @@ import logging
 import os
 from datetime import datetime
 
-# 导入路由
-from api.demands.route import router as demands_router
-from api.crawl.route import router as crawl_router
-from backend.database.database import init_db, db
-
 # 配置日志
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -19,8 +14,8 @@ app = FastAPI(
     title="Micro SaaS Scout API",
     description="出海工具需求挖掘系统后端API",
     version="1.0.0",
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
+    docs_url="/docs",
+    redoc_url="/redoc",
 )
 
 # 配置CORS
@@ -32,86 +27,57 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 注册路由
-app.include_router(demands_router)
-app.include_router(crawl_router)
-
 # 健康检查端点
-@app.get("/api/health")
+@app.get("/health")
 async def health_check():
     """健康检查端点"""
     try:
-        # 测试数据库连接
-        db.test_connection()
-        
         return {
             "status": "healthy",
             "timestamp": datetime.utcnow().isoformat(),
             "service": "micro-saas-scout-api",
             "version": "1.0.0",
-            "database": "connected"
+            "environment": os.getenv("ENVIRONMENT", "development")
         }
     except Exception as e:
         logger.error(f"Health check failed: {str(e)}")
         raise HTTPException(status_code=503, detail="Service unhealthy")
 
-@app.get("/api/")
+@app.get("/")
 async def root():
     """API根端点"""
     return {
         "message": "Welcome to Micro SaaS Scout API",
         "version": "1.0.0",
-        "docs": "/api/docs",
+        "docs": "/docs",
         "endpoints": {
-            "demands": "/api/demands",
-            "health": "/api/health",
-            "stats": "/api/demands/stats/summary"
+            "health": "/health",
+            "hello": "/hello"
         }
     }
 
-@app.get("/api/stats")
+@app.get("/hello")
+async def hello():
+    """Hello端点"""
+    return {
+        "message": "Hello from Micro SaaS Scout API!",
+        "timestamp": datetime.utcnow().isoformat()
+    }
+
+@app.get("/stats")
 async def system_stats():
     """系统统计信息"""
     try:
-        # 获取数据库统计
-        db_stats = db.get_stats()
-        
         return {
             "timestamp": datetime.utcnow().isoformat(),
             "system": "Micro SaaS Scout",
-            "database": db_stats,
             "environment": os.getenv("ENVIRONMENT", "development"),
-            "api_version": "1.0.0"
+            "api_version": "1.0.0",
+            "status": "operational"
         }
     except Exception as e:
         logger.error(f"Error getting system stats: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
-
-# 启动时初始化数据库
-@app.on_event("startup")
-async def startup_event():
-    """应用启动时执行"""
-    logger.info("Starting Micro SaaS Scout API...")
-    
-    try:
-        # 初始化数据库
-        if init_db():
-            logger.info("✅ Database initialized successfully")
-        else:
-            logger.error("❌ Database initialization failed")
-            
-        # 打印环境信息
-        env = os.getenv("ENVIRONMENT", "development")
-        logger.info(f"Running in {env} environment")
-        
-    except Exception as e:
-        logger.error(f"Startup failed: {str(e)}")
-        raise
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """应用关闭时执行"""
-    logger.info("Shutting down Micro SaaS Scout API...")
 
 # 全局异常处理
 @app.exception_handler(Exception)
@@ -128,14 +94,6 @@ async def global_exception_handler(request, exc):
         }
     )
 
-if __name__ == "__main__":
-    import uvicorn
-    
-    # 开发服务器配置
-    uvicorn.run(
-        "api.index:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info"
-    )
+# Vercel Serverless Functions需要这个入口点
+# 注意：Vercel会自动处理FastAPI应用，不需要额外的handler
+# 这个文件作为FastAPI应用的入口点即可
