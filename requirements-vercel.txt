@@ -1,10 +1,4 @@
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-psycopg2-binary==2.9.9
-sqlalchemy==2.0.23
-pydantic==2.5.0
-requests==2.31.0
-beautifulsoup4==4.12.2
-lxml==4.9.3
-python-dotenv==1.0.0
-nltk==3.8.1
+# Vercel Python函数的最小依赖
+# 这个文件会被Vercel自动识别
+
+# 不需要任何外部依赖，使用Python标准库
